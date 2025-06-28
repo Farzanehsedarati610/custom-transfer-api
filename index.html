@@ -45,6 +45,42 @@
       });
       handler.open();
     }
+<h2>Send a Transfer</h2>
+<form id="transferForm">
+  <label>Source SRN:<br><input type="text" name="source" required></label><br><br>
+  <label>Destination SRN:<br><input type="text" name="dest" required></label><br><br>
+  <label>Amount (USD):<br><input type="text" name="amount" required></label><br><br>
+  <button type="submit">Send Transfer</button>
+</form>
+
+<pre id="responseBox" style="margin-top: 1rem; background: #eee; padding: 1rem;"></pre>
+
+<script>
+  document.getElementById('transferForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const payload = {
+      source: form.source.value,
+      dest: form.dest.value,
+      sourceCurrency: "USD",
+      destCurrency: "USD",
+      sourceAmount: form.amount.value,
+      destAmount: form.amount.value,
+      message: "Transfer from symbolic wallet"
+    };
+
+    const res = await fetch('/api/create-transfer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    document.getElementById('responseBox').textContent = JSON.stringify(data, null, 2);
+  });
+</script>
+
   </script>
 </body>
 </html>
