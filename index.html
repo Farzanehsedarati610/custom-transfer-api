@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wyre Transfer Widget</title>
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  <script src="https://verify.sendwyre.com/js/pm-widget-init.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #0070f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Link Your Bank with Wyre</h1>
+  <p>This demo uses the Wyre Payment Method Widget to securely link a bank account.</p>
+  <button onclick="openWyreWidget()">Launch Wyre Widget</button>
+
+  <script>
+    function openWyreWidget() {
+      const handler = new WyrePmWidget({
+        env: "test",
+        onLoad: function () {
+          console.log("Widget loaded");
+        },
+        onSuccess: function (result) {
+          console.log("Public Token:", result.publicToken);
+          alert("Public Token: " + result.publicToken);
+        },
+        onExit: function (err) {
+          console.log("Widget exited:", err);
+        }
+      });
+      handler.open();
+    }
+  </script>
+</body>
+</html>
+
